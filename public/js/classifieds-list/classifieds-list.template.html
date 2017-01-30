@@ -18,9 +18,30 @@
   </div>
   <button id="submitButton" type="button" name="button" ng-click="$ctrl.createPost()" ng-disabled="form.$invalid">SUBMIT</button>
 </form>
+
+<ul class="nav nav-pills">
+  <li role="presentation" class="active">
+    <input type="search" class="form-control input-sm search-form" placeholder="Filter" ng-model="$ctrl.valueToFilterBy">
+  </li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort By {{$ctrl.valueToSortBy}}<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a ng-click="$ctrl.changePostSort('Date')">Date</a></li>
+      <li><a ng-click="$ctrl.changePostSort('Price')">Price</a></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{$ctrl.sortOrder === '+' && 'Ascending' || 'Descending'}}<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a ng-click="$ctrl.changeSortOrder('+')">Ascending</a></li>
+      <li><a ng-click="$ctrl.changeSortOrder('-')">Descending</a></li>
+    </ul>
+  </li>
+</ul>
+
 <hr>
 <h1>Classified Listings</h1>
-<main id="classifiedsContainer" ng-repeat="posts in $ctrl.posts | filter:search | orderBy:sort">
+<main id="classifiedsContainer" ng-repeat="posts in $ctrl.posts | filter:$ctrl.valueToFilterBy | orderBy:$ctrl.sortOrder + $ctrl.valueToSortBy.toLowerCase():$ctrl.valueToSortBy === 'Date'">
   <div>
     <h3>{{posts.title}}</h3>
     <div class="media-left">
@@ -28,6 +49,7 @@
     </div>
     <a ui-sref="post-description({id: posts.id})">{{posts.description}}</a>
     <br>
-    <a ui-sref="post-price({id: posts.price})">${{posts.price}}</a>
+    <a ui-sref="post-price({id: posts.id})">${{posts.price}}</a>
+    <button class="editPostButton" type="button" name="button" ng-click="$ctrl.editPost(posts.id)">EDIT/DELETE</button>
   </div>
 </main>

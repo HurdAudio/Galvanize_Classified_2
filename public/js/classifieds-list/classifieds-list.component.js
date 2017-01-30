@@ -10,12 +10,13 @@
       controller: controller
     });
 
-  controller.$inject = ['$http'];
-  function controller($http) {
+  controller.$inject = ['$http', '$state'];
+  function controller($http, $state) {
     const vm = this;
 
     vm.$onInit = onInit;
     vm.createPost = createPost;
+    vm.editPost = editPost;
 
     function onInit() {
       $http.get('/classifieds')
@@ -30,6 +31,17 @@
           delete vm.post;
         });
     }
+
+    function editPost(id) {
+      console.log(id);
+      $http.get(`/classifieds/${id}`)
+      .then(response => {
+        $state.go('classifiedsPost', {id: response.data.id});
+      });
+
+    }
+
+
 
   }
 
