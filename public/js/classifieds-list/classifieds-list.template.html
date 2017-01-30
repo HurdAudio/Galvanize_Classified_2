@@ -1,20 +1,33 @@
-<h1>Create a post</h1>
-<form ng-submit="$ctrl.createPost()">
-  <label for="title"></label>
-  <input ng-model="$ctrl.post.title" type="text" name="title" placeholder="Title of your post">
-  <label for="description"></label>
-  <input ng-model="$ctrl.post.description" type="text" name="description" placeholder="Describe the thing">
-  <label for="price"></label>
-  <input ng-model="$ctrl.post.price" type="number" name="price" placeholder="0.00">
-  <label for="item_image"></label>
-  <input ng-model="$ctrl.item_image" type="text" name="item_image" placeholder="https://imgflip.com/s/meme/Cute-Cat.jpg">
-  <button id="submitButton" type="button" name="button" ng-click="$ctrl.createMessage()">SUBMIT</button>
+<h1>Create a new post for that thing you want to sell.</h1>
+<form ng-submit="$ctrl.createPost()" novalidate>
+  <div ng-class="{'form-group': true, 'has-error': form.title.$invalid && form.title.$touched }">
+    <label for="title"></label>
+    <input ng-model="$ctrl.post.title" type="text" name="title" required placeholder="Title of your post">
+  </div>
+  <div ng-class="{'form-group': true, 'has-error': form.description.$invalid && form.description.$touched }">
+    <label for="description"></label>
+    <input ng-model="$ctrl.post.description" type="text" name="description" required placeholder="Describe the thing">
+  </div>
+  <div ng-class="{'form-group': true, 'has-error': form.price.$invalid && form.price.$touched }">
+    <label for="price"></label>
+    <input ng-model="$ctrl.post.price" type="number" name="price" required placeholder="0.00">
+  </div>
+  <div ng-class="{'form-group': true, 'has-error': form.item_image.$invalid && form.item_image.$touched }">
+    <label for="item_image"></label>
+    <input ng-model="$ctrl.post.item_image" type="url" name="item_image" required placeholder="https://imgflip.com/s/meme/Cute-Cat.jpg">
+  </div>
+  <button id="submitButton" type="button" name="button" ng-click="$ctrl.createPost()" ng-disabled="form.$invalid">SUBMIT</button>
 </form>
 <hr>
-<h1>Postings</h1>
-<main id="classifiedsContainer" ng-repeat="classifieds in $ctrl.posts">
+<h1>Classified Listings</h1>
+<main id="classifiedsContainer" ng-repeat="posts in $ctrl.posts | filter:search | orderBy:sort">
   <div>
-    <h3>{{posts.name}}</h3>
-    <a ui-sref="post-detail({id: posts.id})">{{posts.description}}</a>
+    <h3>{{posts.title}}</h3>
+    <div class="media-left">
+      <img ng-src="{{posts.item_image}}" class="media-object">
+    </div>
+    <a ui-sref="post-description({id: posts.id})">{{posts.description}}</a>
+    <br>
+    <a ui-sref="post-price({id: posts.price})">${{posts.price}}</a>
   </div>
 </main>
