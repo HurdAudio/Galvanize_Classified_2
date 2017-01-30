@@ -25,7 +25,7 @@
        name: 'classifiedPosting',
        parent: 'app',
        url: '/:id',
-       component: 'classifiedPost',
+       component: 'classifiedsPost',
      });
   }
 
