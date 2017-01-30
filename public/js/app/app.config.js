@@ -22,7 +22,7 @@
         component: 'classifiedsList',
       })
       .state({
-       name: 'classifiedsPosting',
+       name: 'classifiedsPost',
        parent: 'app',
        url: '/:id',
        component: 'classifiedsPost',
