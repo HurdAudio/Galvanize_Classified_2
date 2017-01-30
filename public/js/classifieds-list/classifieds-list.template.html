@@ -1,0 +1,20 @@
+<h1>Create a post</h1>
+<form ng-submit="$ctrl.createPost()">
+  <label for="title"></label>
+  <input ng-model="$ctrl.post.title" type="text" name="title" placeholder="Title of your post">
+  <label for="description"></label>
+  <input ng-model="$ctrl.post.description" type="text" name="description" placeholder="Describe the thing">
+  <label for="price"></label>
+  <input ng-model="$ctrl.post.price" type="number" name="price" placeholder="0.00">
+  <label for="item_image"></label>
+  <input ng-model="$ctrl.item_image" type="text" name="item_image" placeholder="https://imgflip.com/s/meme/Cute-Cat.jpg">
+  <button id="submitButton" type="button" name="button" ng-click="$ctrl.createMessage()">SUBMIT</button>
+</form>
+<hr>
+<h1>Postings</h1>
+<main id="classifiedsContainer" ng-repeat="classifieds in $ctrl.posts">
+  <div>
+    <h3>{{posts.name}}</h3>
+    <a ui-sref="post-detail({id: post.id})">{{posts.description}}</a>
+  </div>
+</main>
