@@ -19,29 +19,24 @@
   <button id="submitButton" type="button" name="button" ng-click="$ctrl.createPost()" ng-disabled="form.$invalid">SUBMIT</button>
 </form>
 
-<ul class="nav nav-pills">
-  <li role="presentation" class="active">
-    <input type="search" class="form-control input-sm search-form" placeholder="Filter" ng-model="$ctrl.valueToFilterBy">
-  </li>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort By {{$ctrl.valueToSortBy}}<span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li><a ng-click="$ctrl.changePostSort('Date')">Date</a></li>
-      <li><a ng-click="$ctrl.changePostSort('Price')">Price</a></li>
-    </ul>
-  </li>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{$ctrl.sortOrder === '+' && 'Ascending' || 'Descending'}}<span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li><a ng-click="$ctrl.changeSortOrder('+')">Ascending</a></li>
-      <li><a ng-click="$ctrl.changeSortOrder('-')">Descending</a></li>
-    </ul>
-  </li>
-</ul>
+<form>
+  <fieldset>
+    <legend>Filter By:</legend>
+    <input name="filter" ng-model="$ctrl.filter" type="text">
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>Order By</legend>
+    <button ng-click="$ctrl.updateSort('-date')" type="button" name="button" value="-date" checked> Date Posted</button>
+    <button ng-click="$ctrl.updateSort('price')" type="button" name="button" value="price"> Price</button>
+  </fieldset>
+
+</form>
+
 
 <hr>
 <h1>Classified Listings</h1>
-<main id="classifiedsContainer" ng-repeat="posts in $ctrl.posts | filter:$ctrl.valueToFilterBy | orderBy:$ctrl.sortOrder + $ctrl.valueToSortBy.toLowerCase():$ctrl.valueToSortBy === 'Date'">
+<main id="classifiedsContainer" ng-repeat="posts in $ctrl.posts | filter : $ctrl.filter | orderBy : $ctrl.sortBy">
   <div>
     <h3>{{posts.title}}</h3>
     <div class="media-left">

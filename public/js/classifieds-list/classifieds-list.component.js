@@ -10,13 +10,15 @@
       controller: controller
     });
 
-  controller.$inject = ['$http', '$state'];
-  function controller($http, $state) {
+  controller.$inject = ['$http', '$state', '$stateParams'];
+  function controller($http, $state, $stateParams) {
     const vm = this;
 
     vm.$onInit = onInit;
     vm.createPost = createPost;
     vm.editPost = editPost;
+    vm.sortBy = '-date';
+    vm.updateSort = updateSort;
 
     function onInit() {
       $http.get('/classifieds')
@@ -39,6 +41,10 @@
         $state.go('classifiedsPost', {id: response.data.id});
       });
 
+    }
+
+    function updateSort(sortedBy) {
+      vm.sortBy = sortedBy;
     }
 
 
